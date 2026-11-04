@@ -27,6 +27,13 @@ from app.api.auth import router as auth_router
 # Ensure tables are created when FastAPI starts
 init_db()
 
+# Auto-seed sample grievances, GIS pins, and schemes on fresh database
+try:
+    from seed_data import seed
+    seed()
+except Exception as e:
+    pass
+
 # Ensure uploads directory exists
 UPLOAD_DIR = os.path.join(BACKEND_DIR, "uploads")
 os.makedirs(UPLOAD_DIR, exist_ok=True)
