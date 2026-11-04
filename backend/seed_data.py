@@ -44,13 +44,19 @@ def seed():
             )
             db.add_all([c1, c2, c3])
             db.commit()
+            db.refresh(c1)
+            db.refresh(c2)
+            db.refresh(c3)
+        else:
+            c2 = db.query(Citizen).filter(Citizen.phone == "9123456780").first()
+            c3 = db.query(Citizen).filter(Citizen.phone == "9988776655").first()
 
         # Seed sample grievances if empty
         if db.query(Grievance).count() == 0:
             print("Seeding initial sample grievances...")
             g1 = Grievance(
                 ticket_number="GRV-1001",
-                citizen_phone="9876543210",
+                citizen_id=c1.id,
                 title="Deep Pothole near Sector 5 Bus Stop",
                 description="Heavy vehicle traffic has caused asphalt cracking and a 2-foot pothole near the main bus stop.",
                 category="Roads & Civil Infrastructure",
@@ -64,7 +70,7 @@ def seed():
             )
             g2 = Grievance(
                 ticket_number="GRV-1002",
-                citizen_phone="9876543210",
+                citizen_id=c1.id,
                 title="Garbage Overflow behind Community Center",
                 description="Sanitation bin overflowing for 3 days attracting stray animals and blocking the pedestrian walkway.",
                 category="Public Health & Sanitation",
@@ -78,7 +84,7 @@ def seed():
             )
             g3 = Grievance(
                 ticket_number="GRV-1003",
-                citizen_phone="9123456780",
+                citizen_id=c2.id if c2 else c1.id,
                 title="Streetlight Pole Sparking & Damaged",
                 description="Heavy wind storm tilted pole 42; wiring sparking intermittently at night.",
                 category="Electricity & Lighting",
@@ -92,7 +98,7 @@ def seed():
             )
             g4 = Grievance(
                 ticket_number="GRV-1004",
-                citizen_phone="9988776655",
+                citizen_id=c3.id if c3 else c1.id,
                 title="Drinking Water Pipeline Leakage",
                 description="Clean water leaking onto the street from main distribution valve, low pressure in nearby homes.",
                 category="Water Supply & Sewage",

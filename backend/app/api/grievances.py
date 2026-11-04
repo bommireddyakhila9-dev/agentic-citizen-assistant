@@ -12,6 +12,18 @@ from app.services.notification import notify_grievance_filed, dispatch_notificat
 router = APIRouter(prefix="/grievances", tags=["Grievances"])
 
 
+@router.get("/seed-demo")
+@router.post("/seed-demo")
+def seed_demo_data(db: Session = Depends(get_db)):
+    """
+    Populates sample grievances, citizens, and GIS pins for demonstrations.
+    """
+    from seed_data import seed
+    seed()
+    count = db.query(Grievance).count()
+    return {"success": True, "message": f"Demo data seeded successfully! Total grievances: {count}"}
+
+
 @router.get("", response_model=List[GrievanceResponse])
 def list_grievances(
     status: Optional[str] = None,
