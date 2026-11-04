@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: apcrda-citizen-assistant-backend
+    env: python
+    rootDir: backend
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: PROJECT_NAME
+        value: Agentic AI Citizen Assistant
+      - key: API_V1_STR
+        value: /api/v1
+      - key: DB_TYPE
+        value: sqlite
+      - key: GEMINI_MODEL
+        value: gemini-flash-lite-latest
+      - key: GEMINI_API_KEY
+        sync: false
+      - key: FAST2SMS_API_KEY
+        sync: false

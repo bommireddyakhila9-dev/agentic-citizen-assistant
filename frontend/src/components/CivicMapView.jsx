@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { MapPin, Search, RefreshCw, AlertTriangle, CheckCircle2, Clock, Image, ExternalLink, Navigation, Printer } from './Icons';
-import { fetchMapPins } from '../services/api';
+import { fetchMapPins, getAssetUrl } from '../services/api';
 
 export default function CivicMapView({ onSelectTicket, onReportAtLocation, onOpenReceipt }) {
   const [pins, setPins] = useState([]);
@@ -532,7 +532,7 @@ export default function CivicMapView({ onSelectTicket, onReportAtLocation, onOpe
           <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', alignItems: 'flex-end' }}>
             {selectedPin.attachment_url && (
               <a
-                href={selectedPin.attachment_url}
+                href={getAssetUrl(selectedPin.attachment_url)}
                 target="_blank"
                 rel="noreferrer"
                 style={{

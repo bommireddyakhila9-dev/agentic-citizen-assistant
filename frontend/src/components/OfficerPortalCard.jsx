@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Briefcase, CheckCircle2, Clock, AlertTriangle, RefreshCw, Send, Image, Search, ShieldCheck } from './Icons';
-import { fetchGrievances, updateGrievanceStatus } from '../services/api';
+import { fetchGrievances, updateGrievanceStatus, getAssetUrl } from '../services/api';
 
 export default function OfficerPortalCard({ onSelectTicketForPrint }) {
   const [grievances, setGrievances] = useState([]);
@@ -288,7 +288,7 @@ export default function OfficerPortalCard({ onSelectTicketForPrint }) {
                 <Image size={16} color="var(--accent)" />
                 <span style={{ fontSize: '0.785rem', color: 'var(--text-main)', fontWeight: 600 }}>Attached Evidence:</span>
                 <a
-                  href={selectedTicket.attachment_url}
+                  href={getAssetUrl(selectedTicket.attachment_url)}
                   target="_blank"
                   rel="noreferrer"
                   style={{ fontSize: '0.785rem', color: 'var(--accent)', textDecoration: 'underline' }}

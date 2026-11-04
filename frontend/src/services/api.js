@@ -10,6 +10,16 @@ const api = axios.create({
 });
 
 /**
+ * Resolves static asset and evidence photo URLs for cross-domain deployments (Vercel + Render)
+ */
+export const getAssetUrl = (url) => {
+  if (!url) return '';
+  if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  const baseUrl = import.meta.env.VITE_API_BASE_URL || '';
+  return `${baseUrl}${url.startsWith('/') ? '' : '/'}${url}`;
+};
+
+/**
  * Checks the FastAPI server health
  */
 export const checkHealth = async () => {
